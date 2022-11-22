@@ -1,0 +1,62 @@
+# То же что Synonym_old, только берет данные на вход из файла
+
+
+import sys
+import subprocess
+sp = ' '
+
+
+def bckup(file_name):
+    try:
+        with open(file_name + '.txt') as f_bckup:
+            content_bckup = f_bckup.read()
+            with open('bckup/' + file_name + ' (bckup).txt', 'w') as f2_bckup:
+                f2_bckup.write(content_bckup)
+    except FileNotFoundError:
+        print('bckup pass')
+        pass
+
+
+final_list = []
+
+input_file_name = input('input file name please: ') + '.txt'
+f_input = open(input_file_name, 'r')
+input_rows = f_input.readlines()
+f_input.close()
+for row in input_rows:
+    row = row.replace('\n', '')
+    if row == '':
+        input_rows.remove(row)
+
+
+
+print('words: ')
+lines = sys.stdin.read().splitlines()
+for line in lines:
+    line.replace('\n', '')
+final_list.append(lines)
+
+
+file_name = input('output file name please: ') + '.txt'
+f = open(file_name, 'a')
+bckup(file_name)
+
+i = 0
+for i0 in input_rows:
+    for i1 in final_list[0]:
+        i0 = i0.replace('\n', '')
+        i1 = i1.replace('\n', '')        
+        phrase = i0 + sp + i1 + '\n'
+        f.write(phrase)
+        i += 1
+
+f.close()
+
+print("добавлено " + str(i) + " скриптов.")
+subprocess.call(['open', file_name])
+
+
+
+
+
+
